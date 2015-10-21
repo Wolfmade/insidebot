@@ -22,18 +22,18 @@ try:
     stored = True
 except:
     print "No stored values found.  Prompting."
-    username = raw_input("Enter your Minecraft username: ").strip()
+    username = raw_input("Enter your ClassiCube username: ").strip()
     password =  raw_input("Enter your password: ").strip()
     serverid = raw_input("Enter the hash for the server (found in URL): ").strip()
 
 print "Please wait.  Loading"
 login = mechanize.Browser()
-login.open("http://minecraft.net/login.jsp")
-login.select_form("input")
+login.open("http://www.classicube.net/acc/login")
+login.select_form(nr = 0)
 login["username"] = username
 login["password"] = password
 login.submit()
-response1 = login.open("http://minecraft.net/play.jsp?server="+serverid).read().splitlines()
+response1 = login.open("http://www.classicube.net/server/play/"+serverid+"/").read().splitlines()
 for x in response1:
     if 'param name="mppass"' in x:
         mppass = x[x.find('value=')+7:x.find('">')]
@@ -1205,10 +1205,10 @@ class MinecraftBotClientFactory(ClientFactory):
 print "Running bot"
 
 if not server:
-    print "Couldn't retrieve information about the server from minecraft.net"
+    print "Couldn't retrieve information about the server from classicube.net"
     print "This means that either: a) The server is down "
     print "                     or b) The hash is incorrect."
-    print "http://minecraft.net/play.jsp?server=72d0bc9151c52126c8f45171b0e2f107"
-    print "                                     <  this part here is the hash  > "
+    print "http://www.classicube.net/server/play/61f27b1f0a3dcb546b650b87a3e17436/"
+    print "                                      <  this part here is the hash  > "
 reactor.connectTCP(server,port,MinecraftBotClientFactory())
 reactor.run()
